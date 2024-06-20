@@ -35,12 +35,12 @@ const comment = sequelize.define(
   { timestamps: false }
 );
 
-// await user.sync();
-// await post.sync();
+await user.sync();
+await post.sync();
 
-// post.hasMany(comment, { foreignKey: "post_id" });
-// user.hasMany(comment, { foreignKey: "created_by_user_id" });
+post.hasMany(comment, { foreignKey: "post_id" });
+user.hasMany(comment, { foreignKey: "created_by_user_id" });
 
-// await comment.sync();
+await comment.sync();
 
 export default comment;

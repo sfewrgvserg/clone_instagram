@@ -1,6 +1,7 @@
 import user from "./user.js";
 import like from "./like.js";
 import post from "./post.js";
+import comment from "./comment.js";
 
 import express from "express";
 import { Op } from "@sequelize/core";
@@ -13,6 +14,59 @@ const PORT = 3001;
 
 app.use(express.json());
 app.use(cors());
+
+// ////////////////////////////////////////////////////////////////////////////
+
+app.get("/all_comments", async (req, res) => {
+  try {
+    const comments = await comment.findAll();
+    res.json(comments);
+  } catch (err) {
+    console.error("Error fetching comments:", err); // Log entire error object
+    res.status(500).json({ message: "Internal server error" }); // Generic message for now
+  }
+});
+
+app.get("/all_comments/:id", async (req, res) => {
+  try {
+    const ID = req.params.id;
+    console.log("Extracted ID:", ID);
+
+    const comments = await comment.findAll({
+      where: { post_id: ID },
+      include: [{ model: user }],
+    });
+
+    if (comments) {
+      res.json(comments);
+    } else {
+      res
+        .status(404)
+        .json({ message: "Comments not found for post ID: " + ID });
+    }
+  } catch (err) {
+    console.error("Error fetching comments:", err); // Log entire error object
+    res.status(500).json({ message: "Internal server error" }); // Generic message for now
+  }
+});
+
+app.post("/all_comments", async (req, res) => {
+  try {
+    const postID = req.body.post_id;
+    const commentEntered = req.body.comment_entered;
+    const user_id = req.body.created_by_user_id;
+
+    await comment.create({
+      post_id: postID,
+      comment: commentEntered,
+      created_by_user_id: user_id,
+    });
+    res.status(201).json({ message: "comment was created successfully" });
+  } catch (err) {
+    console.error("Error fetching comments:", err); // Log entire error object
+    res.status(500).json({ message: "Internal server error" }); // Generic message for now
+  }
+});
 
 // ////////////////////////////////////////////////////////////////////////////
 

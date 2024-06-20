@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
 
@@ -9,10 +8,16 @@ import { HiDotsHorizontal } from "react-icons/hi";
 import { GoHeartFill } from "react-icons/go";
 import { TbLocationShare } from "react-icons/tb";
 import { MdOutlineModeComment } from "react-icons/md";
+import { RiArrowLeftWideFill } from "react-icons/ri";
+import Comment from "@/components/Comment";
+import Link from "next/link";
 
 export default function postInfo({ params }) {
   const [postIn, setPostIn] = useState([]);
   const [isLiked, setIsLiked] = useState([]);
+  const [likedPosts, setLikedPosts] = useState([]);
+  const [show, setShow] = useState(false);
+
   useEffect(() => {
     const fetchingData = async () => {
       const data = await axios.get(`http://localhost:3001/posts/${params.id}`);
@@ -72,17 +77,24 @@ export default function postInfo({ params }) {
     }
   };
 
+  const handleShow = () => {
+    setShow(!show);
+  };
+
   return (
     <div>
-      <div className="w-[35rem] m-auto border-2 border-gray-700">
+      <div className="w-[35rem] m-auto items-center border-2 border-gray-700">
         <div className="flex items-center w-[35rem] justify-between px-5 py-3">
           <div className="flex items-center">
+            <Link href="/" className="pr-5">
+              <RiArrowLeftWideFill size={25} />
+            </Link>
             <Image
               className="rounded-full border-2 border-red-800 "
               src={postIn.user?.profile_img}
-              width={75}
-              height={75}
-              alt="yooo"
+              width={50}
+              height={50}
+              alt={postIn.user?.fist_name}
             />
             <h1 className="text-sm font-medium pl-3">
               {postIn.user?.fist_name} {postIn.user?.last_name}
@@ -94,11 +106,13 @@ export default function postInfo({ params }) {
         <div>
           <Image
             src={postIn.media_file}
+            onDoubleClick={() => handleLike(postIn)}
             width={500}
             height={500}
             className="w-full"
+            alt={postIn.user?.fist_name}
           />
-          <div className="flex space-x-3 px-5 pt-3">
+          <div className="flex space-x-5 px-5 pt-3">
             <div>
               <button onClick={() => handleLike(postIn)}>
                 {true ? (
@@ -108,13 +122,19 @@ export default function postInfo({ params }) {
                 )}
               </button>
             </div>
-            <div className="flex space-x-3">
-              <TbLocationShare size={25} />
-              <MdOutlineModeComment size={25} />
+            <div className="flex space-x-5">
+              <button onClick={() => handleShow()}>
+                <MdOutlineModeComment size={25} />
+              </button>
+              <button>
+                <TbLocationShare size={25} />
+              </button>
             </div>
           </div>
           <p className="pl-2 ">{postIn.likes?.length} Likes</p>
         </div>
+
+        {show && <Comment params={params} />}
       </div>
     </div>
   );

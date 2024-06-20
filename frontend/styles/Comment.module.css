@@ -1,0 +1,12 @@
+.box {
+  animation-name: sliderComment;
+  animation-duration: 1s;
+}
+@keyframes sliderComment {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
