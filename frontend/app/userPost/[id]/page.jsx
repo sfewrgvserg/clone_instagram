@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import axios from "axios";
 
 import { useEffect, useState } from "react";
@@ -9,8 +10,8 @@ import { GoHeartFill } from "react-icons/go";
 import { TbLocationShare } from "react-icons/tb";
 import { MdOutlineModeComment } from "react-icons/md";
 import { RiArrowLeftWideFill } from "react-icons/ri";
+
 import Comment from "@/components/Comment";
-import Link from "next/link";
 
 export default function postInfo({ params }) {
   const [postIn, setPostIn] = useState([]);

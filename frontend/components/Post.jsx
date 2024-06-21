@@ -26,6 +26,7 @@ export default function Post() {
     };
 
     fetchingData();
+    console.log(post);
   }, []);
 
   const calculateTimeDifference = (postDatetime) => {

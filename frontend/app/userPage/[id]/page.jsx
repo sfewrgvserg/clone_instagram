@@ -95,13 +95,15 @@ export default function userPage({ params }) {
                 {dataPost.posts &&
                   dataPost.posts.map((post) => (
                     <div key={post.id} className="">
-                      <Image
-                        className="h-[15rem]"
-                        src={`${post.media_file}`}
-                        width={200}
-                        height={250}
-                        alt={`${dataPost.fist_name} ${dataPost.last_name}'s post`}
-                      />
+                      <Link href={`/userPost/${post.id}`}>
+                        <Image
+                          className="h-[15rem]"
+                          src={`${post.media_file}`}
+                          width={200}
+                          height={250}
+                          alt={`${dataPost.fist_name} ${dataPost.last_name}'s post`}
+                        />
+                      </Link>
                     </div>
                   ))}
               </div>

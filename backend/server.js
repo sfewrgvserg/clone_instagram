@@ -83,13 +83,26 @@ app.get("/all_users", async (req, res) => {
 app.get("/all_users/:userId", async (req, res) => {
   try {
     const id = req.params.userId;
-    const item = await user.findByPk(id, {
-      include: [{ model: post }],
-    });
-    if (item) {
-      res.json(item);
+    console.log(id);
+    if (id === "admin") {
+      const item = await user.findOne({
+        where: { fist_name: id },
+        include: [{ model: post }],
+      });
+      if (item) {
+        res.json(item);
+      } else {
+        res.status(404).json({ message: "User not found" });
+      }
     } else {
-      res.status(404).json({ message: "User not found" });
+      const item = await user.findByPk(id, {
+        include: [{ model: post }],
+      });
+      if (item) {
+        res.json(item);
+      } else {
+        res.status(404).json({ message: "User not found" });
+      }
     }
   } catch (err) {
     console.log("error for /all_users/:id", err.message);

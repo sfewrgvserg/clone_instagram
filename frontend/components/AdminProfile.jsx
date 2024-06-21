@@ -13,7 +13,7 @@ export default function AdminProfileFile() {
       setUser(data.data);
     };
     fetchingData();
-  });
+  }, []);
   return (
     <div className="">
       <RiAdminFill />
