@@ -26,7 +26,7 @@ export default function userPage({ params }) {
 
   return (
     <div>
-      <div className="w-screen h-screen flex justify-center items-center ">
+      <div className="w-screen flex justify-center items-center py-10 px-5 ">
         <div>
           <div className="flex items-center space-x-3">
             <Link href="/">
@@ -91,7 +91,7 @@ export default function userPage({ params }) {
             </div>
 
             <div>
-              <div className="mb-5 grid grid-cols-3 gap-4">
+              <div className="mb-5 grid grid-cols-3 max-sm:grid-cols-1 gap-4">
                 {dataPost.posts &&
                   dataPost.posts.map((post) => (
                     <div key={post.id} className="">

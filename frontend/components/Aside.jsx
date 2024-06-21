@@ -3,7 +3,6 @@ import { IoSearch } from "react-icons/io5";
 import { TiHeartOutline } from "react-icons/ti";
 import { LuBadgePlus } from "react-icons/lu";
 import { TbLogout } from "react-icons/tb";
-// import AdminProfileFile from "./AdminProfile";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -42,10 +41,6 @@ export default function Aside() {
                 <LuBadgePlus className="max-xl:text-xl max-xl:w-full" />
                 <button className="max-xl:hidden">Create</button>
               </div>
-              {/* <div className="flex items-center  space-x-3 py-5 px-3 w-full hover:rounded-xl duration-100 hover:bg-stone-700/30 cursor-pointer">
-              <AdminProfileFile className="max-xl:text-xl max-xl:w-full" />
-              <button className="max-xl:hidden">Profile</button>
-            </div> */}
             </div>
           </div>
           <div className="h-full flex items-end">
