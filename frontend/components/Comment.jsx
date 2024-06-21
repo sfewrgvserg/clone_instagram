@@ -77,6 +77,7 @@ export default function Comment({ params }) {
         post_id: params.id,
         comment_entered: event.target.value,
       });
+      event.target.value = "";
     }
   };
 

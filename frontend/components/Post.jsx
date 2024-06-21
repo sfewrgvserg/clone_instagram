@@ -113,28 +113,28 @@ export default function Post() {
   };
 
   return (
-    <div className="h-screen w-full border-r-2 border-gray-600 overflow-auto no-scrollbar py-16 px-32">
+    <div className="h-screen w-full border-r-2 border-gray-600 overflow-auto no-scrollbar py-16 px-16">
       <div>
         {post.map((item, index) => (
-          <div key={index} className="flex flex-col items-center">
+          <div key={index} className="flex flex-col items-center text-xs">
             <div>
               <Link href={`/userPage/${item.user.id}`}>
                 <div className="flex justify-between">
-                  <div className="flex items-center text-center py-3 text-sm">
+                  <div className="flex items-center text-center py-3">
                     <Image
                       src={item.user.profile_img}
-                      width={50}
-                      height={50}
+                      width={35}
+                      height={35}
                       alt="logo user"
-                      className={`rounded-full ${styles.my_image} `}
+                      className={`rounded-full border-2 border-pink-700 ${styles.my_image} `}
                       priority
                     />
-                    <div className="pl-5 pr-2">
+                    <div className="px-2">
                       <h2 className="font-bold">
                         {item.user.fist_name} {item.user.last_name}
                       </h2>
                     </div>
-                    <h4 className="text-gray-500">
+                    <h4 className="text-gray-500 max-md:hidden">
                       . {calculateTimeDifference(item.created_datetime)}
                     </h4>
                   </div>

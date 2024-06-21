@@ -18,11 +18,16 @@ export default function postInfo({ params }) {
   const [isLiked, setIsLiked] = useState([]);
   const [likedPosts, setLikedPosts] = useState([]);
   const [show, setShow] = useState(false);
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     const fetchingData = async () => {
       const data = await axios.get(`http://localhost:3001/posts/${params.id}`);
       const like = await axios.get("http://localhost:3001/like");
+      const comments = await axios.get(
+        `http://localhost:3001/all_comments/${params.id}`
+      );
+      setComments(comments.data);
       setPostIn(data.data);
       setIsLiked(like.data);
     };
@@ -85,7 +90,7 @@ export default function postInfo({ params }) {
   return (
     <div>
       <div className="w-[35rem] m-auto items-center border-2 border-gray-700">
-        <div className="flex items-center w-[35rem] justify-between px-5 py-3">
+        <div className="flex items-center w-[35rem] justify-between px-5 py-3 ">
           <div className="flex items-center">
             <Link href="/" className="pr-5">
               <RiArrowLeftWideFill size={25} />
@@ -95,7 +100,7 @@ export default function postInfo({ params }) {
               src={postIn.user?.profile_img}
               width={50}
               height={50}
-              alt={postIn.user?.fist_name}
+              alt={`${postIn.user?.fist_name}`}
             />
             <h1 className="text-sm font-medium pl-3">
               {postIn.user?.fist_name} {postIn.user?.last_name}
@@ -110,8 +115,8 @@ export default function postInfo({ params }) {
             onDoubleClick={() => handleLike(postIn)}
             width={500}
             height={500}
-            className="w-full"
-            alt={postIn.user?.fist_name}
+            className="w-full h-[40rem]"
+            alt={`${postIn.user?.fist_name}`}
           />
           <div className="flex space-x-5 px-5 pt-3">
             <div>
@@ -133,6 +138,15 @@ export default function postInfo({ params }) {
             </div>
           </div>
           <p className="pl-2 ">{postIn.likes?.length} Likes</p>
+
+          <div className="px-3 text-xs text-gray-600 py-5">
+            <button
+              className="w-full flex justify-start"
+              onClick={() => handleShow()}
+            >
+              <h2>View all {comments.length} comments</h2>
+            </button>
+          </div>
         </div>
 
         {show && <Comment params={params} />}
