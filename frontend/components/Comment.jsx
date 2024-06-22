@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "@/styles/Comment.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IoCloseSharp } from "react-icons/io5";
 
 import Image from "next/image";
@@ -14,6 +14,7 @@ export default function Comment({ params }) {
   const [show, setShow] = useState(true);
   const [data, setData] = useState([]);
   const [value, setValue] = useState("");
+  const refOne = useRef(null);
 
   const handleShow = () => {
     setShow(false);
@@ -28,12 +29,22 @@ export default function Comment({ params }) {
       if (commentLinst) {
         console.log(commentLinst.data);
         setData(commentLinst.data);
+        document.addEventListener("click", handleClickOutside, true);
       } else {
         setData([]);
       }
     };
     fetchingData();
   }, []);
+
+  const handleClickOutside = (e) => {
+    if (!refOne.current.contains(e.target)) {
+      // cliked outside div
+      handleShow();
+    } else {
+      // clicked inside div
+    }
+  };
 
   const calculateTimeDifference = (commentTime) => {
     // Parse the MySQL datetime string into a JavaScript Date object
@@ -84,7 +95,7 @@ export default function Comment({ params }) {
   return (
     <div>
       {show && (
-        <div className={styles.box}>
+        <div ref={refOne} className={styles.box}>
           <div className="overflow-auto fixed top-[15rem] w-[35rem] no-scrollbar bg-black text-purple-100 h-full border-2 border-gray-700 rounded-t-2xl">
             <div className="flex justify-between items-center w-7/12 ml-auto py-5 pr-3">
               <h3 className="font-bold text-xl">Comment</h3>
